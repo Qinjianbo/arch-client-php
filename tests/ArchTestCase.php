@@ -19,18 +19,19 @@ class ArchTestCase extends TestCase
     public function setUp()
     {
         $options = [
-         'access_app_id' =>'bs-a9b9d665cd94e436',
-         'access_app_secret' =>'345c78c76c290ed0'
+         'access_app_id' => 'bs-a9b9d665cd94e436',
+         'access_app_secret' => '345c78c76c290ed0',
+         'timeout' => 10,
         ];
-        $url = 'http://arch-dev.boqii.com/v3.4/';
+        $url = 'http://arch.local.boqii.com/v3.4/';
         $this->index = new Index($url, $options);
     }
 
     public function testSearch()
     {
-        $param = ['keyword' => '狗粮'];
+        $param = ['keyword' => '狗粮', 'cateid' => 621, 'source' => 'app'];
         $response = $this->index->get($param);
-        $this->assertArrayHasKey('list',$response);
-        $this->assertArrayHasKey('total',$response);
+        $this->assertArrayHasKey('list', $response);
+        $this->assertArrayHasKey('total', $response);
     }
 }

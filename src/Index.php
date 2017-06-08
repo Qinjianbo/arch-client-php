@@ -44,15 +44,18 @@ class Index
     public function get(array $param, array $header = [])
     {
         $fields = ['keyword' => 'q', 'page' => 'p', 'size' => 'ps', 'sort' => 's',
-            'price' => 'price', 'site_source' => 'site_source',
-            'brandid' => 'brandid', 'cateid' => 'cateid',
-            'ifpromotion' => 'ifpromotion', 'isglobal' => 'isglobal',
+            'price' => 'price', 'site_source' => 'site_source', 'upstatus' => 'upstatus',
+            'brandid' => 'brandid', 'cateid' => 'cateid', 'isstock' => 'isstock',
+            'ifpromotion' => 'ifpromotion', 'isglobal' => 'isglobal', 'attrid' => 'attrid',
+            'source' => 'source',
         ];
+
         $query = \Liugj\Helpers\array_key_exchange($param, $fields);
         $query['highlight'] = 'pname';
         $query['facets'] = 'brandid,c3,p';
         $query['format'] = 'json';
         $query['range'] = $param['price'] ?? '';
+
         foreach (['minprice', 'maxprice'] as $price) {
             $query['range'] .= sprintf('$%s', $param[$price] ?? '');
         }
@@ -76,6 +79,8 @@ class Index
             return $value;
         }, $response['result']);
 
-        return \Liugj\Helpers\array_key_exchange($response, ['result' => 'list', 'total' => 'total', 'facets' => 'facets']);
+        return \Liugj\Helpers\array_key_exchange($response,
+                ['result' => 'list', 'total' => 'total', 'facets' => 'facets', 'crumbs' => 'crumbs']
+        );
     }
 }

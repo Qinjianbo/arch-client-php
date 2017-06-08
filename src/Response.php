@@ -124,7 +124,7 @@ class Response implements Iterator, ArrayAccess
     {
         $json = json_decode($this->body, $assoc);
         if (!$json) {
-            throw new Exception\JsonDecode(json_last_error_msg());
+            throw new \Liugj\Arch\Exception\JsonDecode(json_last_error_msg());
         }
 
         return $json;
@@ -255,7 +255,7 @@ class Response implements Iterator, ArrayAccess
      */
     public function offsetSet($key, $value)
     {
-        throw new Exception\ArrayAccess('Decoded response data is immutable.');
+        throw new \Liugj\Arch\Exception\ArrayAccess('Decoded response data is immutable.');
     }
 
     /**
@@ -267,7 +267,7 @@ class Response implements Iterator, ArrayAccess
      */
     public function offsetUnset($key)
     {
-        throw new Exception\ArrayAccess('Decoded response data is immutable.');
+        throw new \Liugj\Arch\Exception\ArrayAccess('Decoded response data is immutable.');
     }
 
     /**
