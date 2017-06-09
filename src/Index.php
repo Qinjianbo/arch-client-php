@@ -37,20 +37,16 @@ class Index
      * get.
      *
      * @param array $param
-     * @param array $header
+     * @param array $headers
      *
      * @return mixed
      */
-    public function get(array $param, array $header = [])
+    public function get(array $param, array $headers = [])
     {
-        $fields = ['keyword' => 'q', 'page' => 'p', 'size' => 'ps', 'sort' => 's',
-            'price' => 'price', 'site_source' => 'site_source', 'upstatus' => 'upstatus',
-            'brandid' => 'brandid', 'cateid' => 'cateid', 'isstock' => 'isstock',
-            'ifpromotion' => 'ifpromotion', 'isglobal' => 'isglobal', 'attrid' => 'attrid',
-            'source' => 'source',
-        ];
-
-        $query = \Liugj\Helpers\array_key_exchange($param, $fields);
+        $fields = ['q','p','ps', 's','price', 'site_source', 'brandid','cateid', 
+                   'isstock', 'ifpromotion', 'isglobal', 'attrid','source'
+                  ];
+        $query = array_intersect_key($param, array_flip($fields));
         $query['highlight'] = 'pname';
         $query['facets'] = 'brandid,c3,p';
         $query['format'] = 'json';
@@ -60,7 +56,7 @@ class Index
             $query['range'] .= sprintf('$%s', $param[$price] ?? '');
         }
 
-        $response = $this->restClient->get('search', $query, $header)->toArray();
+        $response = $this->restClient->get('search', $query, $headers)->toArray();
         $response['result'] = array_map(function ($product) {
             $value = [
                 'product' => ['id' => $product['id'], 'pname' => $product['pname'],

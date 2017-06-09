@@ -54,12 +54,15 @@ class RestClient
     {
         $url = $args[0];
         $vars = isset($args[1]) ? $args[1] : array();
-        $headers = isset($args[2]) ? $args[2] : array();
+        $headers = (isset($args[2]) ? $args[2] : array()) + array('User-Agent'=>'arch client php dev-master');
 
         $response = (new GuzzleHttpClient([
            'base_uri' => $this->baseUri,
            'timeout' => $this->options['timeout'] ?? 3.0,
-        ]))->request($method, $url, ['query' => $this->before($method, $url, $vars)]);
+        ]))->request($method, $url, [
+            'query' => $this->before($method, $url, $vars),
+            'headers' => $headers
+        ]);
 
         return new Response($response);
     }
