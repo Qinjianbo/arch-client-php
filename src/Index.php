@@ -65,7 +65,7 @@ class Index
                 'upstatus' => $product['upstatus'], 'cast' => $product['cast'],
                 'newcast' => $product['newcast'], 'isglobal' => $product['isglobal'],
                 'is_replace' => $product['is_replace'], 'globalstorage' => $product['globalstorage'],
-                'globalcity' => $product['globalcity'],
+                'globalcity' => $product['globalcity']??'',
                 ],
                 'brand' => ['id' => $product['brandid'], 'name' => $product['brandname']],
                 'product_category' => ['cid' => $product['c3']],
