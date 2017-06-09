@@ -44,17 +44,12 @@ class Index
     public function get(array $param, array $headers = [])
     {
         $fields = ['q','p','ps', 's','price', 'site_source', 'brandid','cateid', 
-                   'isstock', 'ifpromotion', 'isglobal', 'attrid','source'
+                   'isstock', 'ifpromotion', 'isglobal', 'attrid','source', 'range'
                   ];
         $query = array_intersect_key($param, array_flip($fields));
         $query['highlight'] = 'pname';
         $query['facets'] = 'brandid,c3,p';
         $query['format'] = 'json';
-        $query['range'] = $param['price'] ?? '';
-
-        foreach (['minprice', 'maxprice'] as $price) {
-            $query['range'] .= sprintf('$%s', $param[$price] ?? '');
-        }
 
         $response = $this->restClient->get('search', $query, $headers)->toArray();
         $response['result'] = array_map(function ($product) {
