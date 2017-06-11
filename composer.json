@@ -6,16 +6,10 @@
             "email": "liugj@boqii.com"
         }
         ],
-        "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/liugj/helpers"
-        }
-        ],
         "require": {
              "php": ">=7.0",
             "guzzlehttp/guzzle": "^6.2",
-            "liugj/helpers": "dev-master"
+            "liugj/helpers": "~1"
         },
       "require-dev": {
           "phpunit/phpunit": "~5",
