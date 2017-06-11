@@ -43,8 +43,8 @@ class Index
      */
     public function get(array $param, array $headers = [])
     {
-        $fields = ['q','p','ps', 's','price', 'site_source', 'brandid','cateid', 
-                   'isstock', 'ifpromotion', 'isglobal', 'attrid','source'
+        $fields = ['q', 'p', 'ps', 's', 'price', 'site_source', 'brandid', 'cateid',
+                   'isstock', 'ifpromotion', 'isglobal', 'attrid', 'source',
                   ];
         $query = array_intersect_key($param, array_flip($fields));
         $query['highlight'] = 'pname';
@@ -76,7 +76,7 @@ class Index
         }, $response['result']);
 
         return \Liugj\Helpers\array_key_exchange($response,
-                ['result' => 'list', 'total' => 'total', 'facets' => 'facets', 'crumbs' => 'crumbs','count'=>'count']
+                ['result' => 'list', 'total' => 'total', 'facets' => 'facets', 'crumbs' => 'crumbs', 'count' => 'count']
         );
     }
 }
