@@ -43,31 +43,40 @@ class Index
      */
     public function get(array $param, array $headers = [])
     {
-        $fields = ['q','p','ps', 's','price', 'site_source', 'brandid','cateid', 
+        $fields = [
+                   'q','p','ps', 's','price', 'site_source', 'brandid','cateid', 
                    'isstock', 'ifpromotion', 'isglobal', 'attrid','source', 'range'
                   ];
+                  
         $query = array_intersect_key($param, array_flip($fields));
+
         $query['highlight'] = 'pname';
         $query['facets'] = 'brandid,c3,p';
         $query['format'] = 'json';
 
         $response = $this->restClient->get('search', $query, $headers)->toArray();
-        $response['result'] = array_map(function ($product) {
-            $value = [
-                'product' => ['id' => $product['id'], 'pname' => $product['pname'],
-                'subtitle' => $product['subtitle'] ?? '', 'sales' => $product['sales'],
-                'commentnum' => $product['commentnum'], 'stock' => $product['inventory'],
-                'upstatus' => $product['upstatus'], 'cast' => $product['cast'],
-                'newcast' => $product['newcast'], 'isglobal' => $product['isglobal'],
-                'is_replace' => $product['is_replace'], 'globalstorage' => $product['globalstorage'],
-                'globalcity' => $product['globalcity']??'',
-                ],
-                'brand' => ['id' => $product['brandid'], 'name' => $product['brandname']],
-                'product_category' => ['cid' => $product['c3']],
-                'photo' => ['pid' => $product['id'], 'picpath' => $product['picpath']],
-                ];
+        $fields = [
+             'product'=>[
+                 'id' =>'id', 'pname'=>'pname', 'subtitle' => 'subtitle',
+                 'sales' => 'sales',  'commentnum' => 'commentnum',
+                 'stock' => 'inventory', 'upstatus' => 'upstatus', 'newcast'=>'newcast',
+                 'isglobal' => 'isglobal', 'is_replace' => 'is_replace',
+                 'globalstorage' => 'globalstorage', 'globalcity' => 'globalcity'
+              ], 
+              'brand'=>['id' => 'brandid', 'brandname' => 'brandname'], 
+              'product_category'=>['cid' => 'c3'], 
+              'photo' => ['pid' =>'id', 'picpath' =>'picpath']
+        ];
 
+        $response['result'] = array_map(function ($product) use ($fields) {
+            $value = [];
+            foreach ($fields as $key=>$columns){
+                foreach ($columns as $keyCol => $column) {
+                    $value[$key] [$keyCol] = $product[$column] ??'';
+                }
+            }
             return $value;
+
         }, $response['result']);
 
         return \Liugj\Helpers\array_key_exchange($response,
