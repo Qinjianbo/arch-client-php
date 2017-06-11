@@ -43,13 +43,11 @@ class Index
      */
     public function get(array $param, array $headers = [])
     {
-        $fields = [
+        $query = array_intersect_key($param, array_flip([
                    'q', 'p', 'ps', 's', 'price', 'site_source', 'brandid', 'cateid',
                    'isstock', 'ifpromotion', 'isglobal', 'attrid', 'source', 'range',
-                  ];
-
-        $query = array_intersect_key($param, array_flip($fields));
-
+                  ])
+        );
         $query['highlight'] = 'pname';
         $query['facets'] = 'brandid,c3,p';
         $query['format'] = 'json';
