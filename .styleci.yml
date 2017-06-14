@@ -7,9 +7,6 @@ enabled:
   - align_double_arrow
 
 disabled:
-  - long_array_syntax
-  - psr4
-
 
 finder:
   name: [ "*.php"]
