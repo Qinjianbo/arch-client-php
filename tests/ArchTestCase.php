@@ -19,9 +19,9 @@ class ArchTestCase extends TestCase
     public function setUp()
     {
         $options = [
-         'access_app_id' => 'bs-a9b9d665cd94e436',
+         'access_app_id'     => 'bs-a9b9d665cd94e436',
          'access_app_secret' => '345c78c76c290ed0',
-         'timeout' => 10,
+         'timeout'           => 10,
         ];
         $url = 'http://arch.local.boqii.com/v3.4/';
         $this->index = new Index($url, $options);

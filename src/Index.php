@@ -55,22 +55,22 @@ class Index
         $response = $this->restClient->get('search', $query, $headers)->toArray();
         $fields = [
              'product' => [
-                 'id' => 'id', 'pname' => 'pname', 'subtitle' => 'subtitle',
-                 'sales' => 'sales',  'commentnum' => 'commentnum',
-                 'stock' => 'inventory', 'upstatus' => 'upstatus', 'newcast' => 'newcast',
-                 'isglobal' => 'isglobal', 'is_replace' => 'is_replace',
+                 'id'            => 'id', 'pname' => 'pname', 'subtitle' => 'subtitle',
+                 'sales'         => 'sales',  'commentnum' => 'commentnum',
+                 'stock'         => 'inventory', 'upstatus' => 'upstatus', 'newcast' => 'newcast',
+                 'isglobal'      => 'isglobal', 'is_replace' => 'is_replace',
                  'globalstorage' => 'globalstorage', 'globalcity' => 'globalcity',
               ],
-              'brand' => ['id' => 'brandid', 'brandname' => 'brandname'],
+              'brand'            => ['id' => 'brandid', 'brandname' => 'brandname'],
               'product_category' => ['cid' => 'c3'],
-              'photo' => ['pid' => 'id', 'picpath' => 'picpath'],
+              'photo'            => ['pid' => 'id', 'picpath' => 'picpath'],
         ];
 
         $response['result'] = array_map(function ($product) use ($fields) {
             $value = [];
             foreach ($fields as $key => $columns) {
                 foreach ($columns as $keyCol => $column) {
-                    $value[$key] [$keyCol] = $product[$column] ?? '';
+                    $value[$key][$keyCol] = $product[$column] ?? '';
                 }
             }
 

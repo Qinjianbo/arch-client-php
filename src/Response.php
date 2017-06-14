@@ -29,7 +29,7 @@ class Response implements Iterator, ArrayAccess
      *
      * @var array
      */
-    public $headers = array();
+    public $headers = [];
     /**
      * json.
      *
