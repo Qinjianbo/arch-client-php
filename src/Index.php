@@ -44,7 +44,7 @@ class Index
     public function get(array $param, array $headers = [])
     {
         $query = array_intersect_key($param, array_flip([
-                   'q', 'p', 'ps', 's', 'price', 'site_source', 'brandid', 'cateid',
+                   'q', 'p', 'ps', 's', 'price', 'site_source', 'brandid', 'cateid', 'coupon',
                    'isstock', 'ifpromotion', 'isglobal', 'attrid', 'source', 'range',
                   ])
         );
@@ -55,15 +55,15 @@ class Index
         $response = $this->restClient->get('search', $query, $headers)->toArray();
         $fields = [
              'product' => [
-                 'id'            => 'id', 'pname' => 'pname', 'subtitle' => 'subtitle',
-                 'sales'         => 'sales',  'commentnum' => 'commentnum',
-                 'stock'         => 'inventory', 'upstatus' => 'upstatus', 'newcast' => 'newcast',
-                 'isglobal'      => 'isglobal', 'is_replace' => 'is_replace',
+                 'id' => 'id', 'pname' => 'pname', 'subtitle' => 'subtitle',
+                 'sales' => 'sales',  'commentnum' => 'commentnum',
+                 'stock' => 'inventory', 'upstatus' => 'upstatus', 'newcast' => 'newcast',
+                 'isglobal' => 'isglobal', 'is_replace' => 'is_replace',
                  'globalstorage' => 'globalstorage', 'globalcity' => 'globalcity',
               ],
-              'brand'            => ['id' => 'brandid', 'brandname' => 'brandname'],
+              'brand' => ['id' => 'brandid', 'brandname' => 'brandname'],
               'product_category' => ['cid' => 'c3'],
-              'photo'            => ['pid' => 'id', 'picpath' => 'picpath'],
+              'photo' => ['pid' => 'id', 'picpath' => 'picpath'],
         ];
 
         $response['result'] = array_map(function ($product) use ($fields) {
