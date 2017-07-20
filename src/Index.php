@@ -78,7 +78,10 @@ class Index
         }, $response['result']);
 
         return \Liugj\Helpers\array_key_exchange($response,
-                ['result' => 'list', 'total' => 'total', 'facets' => 'facets', 'crumbs' => 'crumbs', 'count' => 'count']
+                [
+                    'result' => 'list', 'total' => 'total', 'facets' => 'facets',
+                    'crumbs' => 'crumbs', 'count' => 'count', 'keyword' => 'Keyword',
+                ]
         );
     }
 }

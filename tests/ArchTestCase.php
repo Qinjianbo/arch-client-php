@@ -36,4 +36,14 @@ class ArchTestCase extends TestCase
         $this->assertArrayHasKey('list', $response);
         $this->assertArrayHasKey('total', $response);
     }
+
+    public function testSearchReplace()
+    {
+        $param = ['q' => '无情', 'source' => 'app'];
+        $response = $this->index->get($param);
+        $this->assertArrayHasKey('list', $response);
+        $this->assertArrayHasKey('total', $response);
+        $this->assertArrayHasKey('Keyword', $response);
+        $this->assertEquals('狗粮', $response['Keyword']);
+    }
 }
