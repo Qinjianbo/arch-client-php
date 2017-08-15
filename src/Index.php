@@ -77,6 +77,8 @@ class Index
             return $value;
         }, $response['result']);
 
+        $response['keyword'] = $response['keyword'] ?? '';
+
         return \Liugj\Helpers\array_key_exchange($response,
                 [
                     'result' => 'list', 'total' => 'total', 'facets' => 'facets',
